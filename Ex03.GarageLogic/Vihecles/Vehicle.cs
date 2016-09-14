@@ -59,7 +59,13 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public 
+        public int NumOfWheels
+        {
+            get
+            {
+                return int m_NumOfWheels;
+            }
+        }
 
 
 

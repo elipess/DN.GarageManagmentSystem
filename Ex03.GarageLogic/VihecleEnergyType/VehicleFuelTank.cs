@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    public class TypeFuledVehicle
+    public class VehicleFuelTank
     {
 
         private float m_CurrentAmountOfFuelLiters;
@@ -14,9 +14,9 @@ namespace Ex03.GarageLogic
         public enum eFuelType
         {
             Soler,
-            Octane95,
-            Octane96,
-            Octane98
+            Octan95,
+            Octan96,
+            Octan98
         }
 
         public void refuel(float i_AddedFuelAmountLiters, eFuelType i_FuelType)

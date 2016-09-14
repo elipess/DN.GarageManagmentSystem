@@ -11,6 +11,8 @@ namespace Ex03.GarageLogic
         private const int k_MaxWheelsAirPressure = 30;
         private bool m_ContainsDangerousSubstance;
         private float m_MaxAllowedCarryingWeight;
+        private const float k_GasTankCapacity = 130;
+        private const VehicleFuelTank.eFuelType k_FuelType = VehicleFuelTank.eFuelType.Soler;
        
         public int TruckNumOfWheels
         {

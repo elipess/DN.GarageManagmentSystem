@@ -11,6 +11,17 @@ namespace Ex03.GarageLogic
 
         protected eCarColor m_CarColor;
         protected ePrivateCarNumOfDoors m_PrivateCarNumOfDoors;
+
+        public PrivateCar(string i_Model, string i_PlateNumber, int i_EngineCapacity, 
+                                 string i_WheelManufacturer, float i_CurrentAirPressure, float i_MaxWheelAirPressureByManufacturer,
+                                 eCarColor i_CarColor, ePrivateCarNumOfDoors i_PrivateCarNumOfDoors)
+                                 : base(i_Model, i_PlateNumber,
+                                        i_WheelManufacturer, i_CurrentAirPressure, i_MaxWheelAirPressureByManufacturer)
+                                        
+        {
+            m_CarColor = i_CarColor;
+            m_PrivateCarNumOfDoors = i_PrivateCarNumOfDoors;
+        }
         public enum eCarColor
         {
             White,
@@ -48,6 +59,22 @@ namespace Ex03.GarageLogic
             set
             {
                 m_PrivateCarNumOfDoors = value;
+            }
+        }
+
+        public int CarNumOfWheels
+        {
+            get
+            {
+                return k_CarNumOfWheels;
+            }
+        }
+
+        public int MaxWheelsAirPressure
+        {
+            get
+            {
+                return k_MaxWheelsAirPressure;
             }
         }
     }

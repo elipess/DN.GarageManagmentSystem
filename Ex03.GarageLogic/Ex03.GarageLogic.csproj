@@ -43,8 +43,8 @@
     <Compile Include="Vihecles\MotorBike.cs" />
     <Compile Include="Vihecles\PrivateCar.cs" />
     <Compile Include="Vihecles\Truck.cs" />
-    <Compile Include="VihecleType\TypeElectricVehicle.cs" />
-    <Compile Include="VihecleType\TypeFuledVehicle.cs" />
+    <Compile Include="VihecleEnergyType\VehicleBattery.cs" />
+    <Compile Include="VihecleEnergyType\VehicleFuelTank.cs" />
     <Compile Include="Vihecles\Vehicle.cs" />
     <Compile Include="Service\VehicleManager.cs" />
     <Compile Include="Vihecles\Wheel.cs" />

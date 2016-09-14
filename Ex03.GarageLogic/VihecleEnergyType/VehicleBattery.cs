@@ -4,12 +4,16 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    public class TypeElectricVehicle
+    public class VehicleBattery
     {
         private float m_CurrentBatteryTimeRemainingHours;
         private readonly float m_MaxBatteryTimeHours;
 
 
+        public VehicleBattery(float i_MaxBatteryTimeHours )
+        {
+            m_MaxBatteryTimeHours = i_MaxBatteryTimeHours;
+        }
         public void recharge(float i_AddedBatteryAmountHours)   
         {
             /////
@@ -33,12 +37,6 @@ namespace Ex03.GarageLogic
            {
                return m_MaxBatteryTimeHours;
            }
-           set
-           {
-               m_MaxBatteryTimeHours = value;
-           }
-
-
        }
 
     }

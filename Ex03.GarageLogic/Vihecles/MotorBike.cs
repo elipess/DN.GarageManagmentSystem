@@ -12,6 +12,17 @@ namespace Ex03.GarageLogic
         protected eLicenseType m_LicenseType;
         protected int m_EngineCapacity;
      
+        public MotorBike(string i_Model, string i_PlateNumber, int i_EngineCapacity,
+                                 string i_WheelManufacturer, float i_CurrentAirPressure, float i_MaxWheelAirPressureByManufacturer,
+                                 MotorBike.eLicenseType i_LicenseType)
+                                 : base(i_Model, i_PlateNumber,
+                                        i_WheelManufacturer, i_CurrentAirPressure, i_MaxWheelAirPressureByManufacturer)
+                                        
+        {
+            m_EngineCapacity = i_EngineCapacity;
+            m_LicenseType = i_LicenseType;
+        }
+       
         public enum eLicenseType
         {
             A,
@@ -41,6 +52,22 @@ namespace Ex03.GarageLogic
             set
             {
                 m_EngineCapacity = value;
+            }
+        }
+
+        public int MotorBikeNumOfWheels
+        {
+            get
+            {
+                return k_MotorBikeNumOfWheels;
+            }
+        }
+
+        public int MaxWheelsAirPressure
+        {
+            get
+            {
+                return k_MaxWheelsAirPressure;
             }
         }
 

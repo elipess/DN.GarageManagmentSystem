@@ -4,9 +4,51 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
+    public class MandatoriesHolder<T>
+    {
+        private T m_Value;
+        private string m_Description;
+
+        public MandatoriesHolder(string i_Description)
+        {
+            m_Description = i_Description;
+        }
+
+        public override string ToString()
+        {
+            return m_Description;
+        }
+ 
+    
+        public T Value
+        {
+            get
+            {
+                return m_Value;
+            }
+
+            set
+            {
+                m_Value = value;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return m_Description;
+            }
+
+            set
+            {
+                m_Description = value;
+            }
+        }
+    }
     public abstract class Vehicle
     {
-        protected string m_Model;
+        protected MandatoriesHolder<string> m_Model = new MandatoriesHolder<string>("Model");
         protected string m_PlateNumber;
         protected float m_PercentOfRemainingEnergy;
         protected List<Wheel> m_Wheels;      
@@ -63,7 +105,7 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return int m_NumOfWheels;
+                return m_NumOfWheels;
             }
         }
 

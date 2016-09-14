@@ -15,15 +15,15 @@ namespace Ex03.GarageLogic
         private const VehicleFuelTank.eFuelType k_FuelType = VehicleFuelTank.eFuelType.Soler;
         private VehicleFuelTank m_FuelTank = new VehicleFuelTank(k_FuelTankCapacity, k_FuelType, 0);
 
-
-
-        public Truck(string i_Model, string i_PlateNumber, int i_EngineCapacity,
-                                 string i_WheelManufacturer, float i_CurrentAirPressure, float i_MaxWheelAirPressureByManufacturer,
-                                 eCarColor i_CarColor, ePrivateCarNumOfDoors i_PrivateCarNumOfDoors)
-            : base(i_Model, i_PlateNumber, i_EngineCapacity,
-                   i_WheelManufacturer, i_CurrentAirPressure, i_MaxWheelAirPressureByManufacturer,
-                   i_CarColor, i_PrivateCarNumOfDoors)
+        public Truck(string i_Model, string i_PlateNumber, 
+                     string i_WheelManufacturer, float i_CurrentAirPressure, float i_MaxWheelAirPressureByManufacturer,
+                     bool i_ContainsDangerousSubstance, float i_MaxAllowedCarryingWeight)     
+                     : base(i_Model, i_PlateNumber,
+                            i_WheelManufacturer, i_CurrentAirPressure, i_MaxWheelAirPressureByManufacturer)
+                                  
         {
+            m_ContainsDangerousSubstance = i_ContainsDangerousSubstance;
+            m_MaxAllowedCarryingWeight = i_MaxAllowedCarryingWeight;
         }
         public int TruckNumOfWheels
         {
@@ -63,6 +63,22 @@ namespace Ex03.GarageLogic
             set
             {
                 m_MaxAllowedCarryingWeight = value;
+            }
+        }
+
+        public float FuelTankCapacity
+        {
+            get
+            {
+                return k_FuelTankCapacity;
+            }
+        }
+
+        public VehicleFuelTank.eFuelType FuelType
+        {
+            get
+            {
+                return k_FuelType;
             }
         }
     }

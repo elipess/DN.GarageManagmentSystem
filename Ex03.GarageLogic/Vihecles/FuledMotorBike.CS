@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
     {
         private const float k_FuelTankCapacity = 7.5F;
         private const VehicleFuelTank.eFuelType k_FuelType = VehicleFuelTank.eFuelType.Octan98;
-        private VehicleFuelTank m_FuelTank = new VehicleFuelTank(k_FuelTankCapacity, k_FuelType);
+        private VehicleFuelTank m_FuelTank = new VehicleFuelTank(k_FuelTankCapacity, k_FuelType, 0);
 
 
 
@@ -20,6 +20,22 @@ namespace Ex03.GarageLogic
                                         i_LicenseType)
                                
         {
+        }
+
+        public float FuelTankCapacity
+        {
+            get
+            {
+                return k_FuelTankCapacity;
+            }
+        }
+
+        public VehicleFuelTank.eFuelType FuelType
+        {
+            get
+            {
+                return k_FuelType;
+            }
         }
     }
 }

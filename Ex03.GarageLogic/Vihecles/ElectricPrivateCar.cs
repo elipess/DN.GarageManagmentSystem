@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
     {
         private const float k_MaxBatteryWorkingTimeHours = 2.6f;
 
-        private VehicleBattery m_Battery = new VehicleBattery(k_MaxBatteryWorkingTimeHours);
+        private VehicleBattery m_Battery = new VehicleBattery(k_MaxBatteryWorkingTimeHours, 0);
 
         public ElectricPrivateCar(string i_Model, string i_PlateNumber, int i_EngineCapacity,
                                  string i_WheelManufacturer, float i_CurrentAirPressure, float i_MaxWheelAirPressureByManufacturer,

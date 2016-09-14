@@ -10,9 +10,10 @@ namespace Ex03.GarageLogic
         private readonly float m_MaxBatteryTimeHours;
 
 
-        public VehicleBattery(float i_MaxBatteryTimeHours )
+        public VehicleBattery(float i_MaxBatteryTimeHours, float i_CurrentBatteryTimeRemainingHours)
         {
             m_MaxBatteryTimeHours = i_MaxBatteryTimeHours;
+            m_CurrentBatteryTimeRemainingHours = i_CurrentBatteryTimeRemainingHours;
         }
         public void recharge(float i_AddedBatteryAmountHours)   
         {

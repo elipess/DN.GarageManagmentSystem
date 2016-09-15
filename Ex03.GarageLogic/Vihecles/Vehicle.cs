@@ -51,7 +51,8 @@ namespace Ex03.GarageLogic
         protected MandatoriesHolder<string> m_Model = new MandatoriesHolder<string>("Model");
         protected string m_PlateNumber;
         protected float m_PercentOfRemainingEnergy;
-        protected List<Wheel> m_Wheels;      
+        protected List<Wheel> m_Wheels;
+        private string m_TypeName;      
         protected readonly int m_NumOfWheels;
         protected readonly int m_WheelAirPressure;
 
@@ -60,23 +61,11 @@ namespace Ex03.GarageLogic
                        string i_WheelManufacturer, float i_CurrentAirPressure, float i_MaxWheelAirPressureByManufacturer) 
                                
         {
-            m_Model = i_Model;
+            m_Model.Value = i_Model;
             m_PlateNumber = i_PlateNumber;
             m_Wheels = new List<Wheel>();
         }
         
-        public string Model
-        {
-            get
-            {
-                return m_Model;
-            }
-            set
-            {
-                m_Model = value;
-            }
-        }
-
         public string PlateNumber
         {
             get
@@ -109,7 +98,17 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public string TypeName
+        {
+            get
+            {
+                return m_TypeName;
+            }
 
-
+            set
+            {
+                m_TypeName = value;
+            }
+        }
     }
 }

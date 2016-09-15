@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    public class VehicleHolder
+    public class VehiclesHolder
     {
         private readonly Dictionary<string, Vehicle> r_VehiclesInGarage;
-        public VehicleHolder()
+        public VehiclesHolder()
         {
             r_VehiclesInGarage = new Dictionary<string, Vehicle>();
         }
@@ -20,9 +20,9 @@ namespace Ex03.GarageLogic
             ElectricPrivateCar,
             Truck
         }
+
         public void CreateNewVehicle(Vehicle i_NewVehicle)
         {  
-
             eVehicleType  m_Type = (eVehicleType) Enum.Parse(typeof(eVehicleType),i_NewVehicle.GetType().Name);
     
             switch(m_Type)
@@ -42,10 +42,8 @@ namespace Ex03.GarageLogic
                 case eVehicleType.Truck :
                     r_VehiclesInGarage.Add(i_NewVehicle.PlateNumber, i_NewVehicle as Truck);
                     break;
-
             }
         }
-
     }
 }
 

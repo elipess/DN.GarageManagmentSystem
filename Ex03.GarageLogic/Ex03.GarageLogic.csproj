@@ -36,6 +36,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Service\GarageManager.cs" />
+    <Compile Include="Service\VehiclesHolder.cs" />
+    <Compile Include="Exceptions\ValueOutOfRangeException.cs" />
     <Compile Include="Vihecles\ElectricMotorBike.cs" />
     <Compile Include="Vihecles\ElectricPrivateCar.cs" />
     <Compile Include="Vihecles\FuledMotorBike.CS" />
@@ -46,7 +48,6 @@
     <Compile Include="VihecleEnergyType\VehicleBattery.cs" />
     <Compile Include="VihecleEnergyType\VehicleFuelTank.cs" />
     <Compile Include="Vihecles\Vehicle.cs" />
-    <Compile Include="Service\VehicleManager.cs" />
     <Compile Include="Vihecles\Wheel.cs" />
   </ItemGroup>
   <ItemGroup>

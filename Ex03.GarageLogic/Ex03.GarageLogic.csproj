@@ -36,22 +36,26 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Service\GarageManager.cs" />
-    <Compile Include="Service\VehiclesHolder.cs" />
     <Compile Include="Exceptions\ValueOutOfRangeException.cs" />
-    <Compile Include="Vihecles\ElectricMotorBike.cs" />
-    <Compile Include="Vihecles\ElectricPrivateCar.cs" />
-    <Compile Include="Vihecles\FuledMotorBike.CS" />
-    <Compile Include="Vihecles\FuledPrivateCar.cs" />
-    <Compile Include="Vihecles\MotorBike.cs" />
-    <Compile Include="Vihecles\PrivateCar.cs" />
-    <Compile Include="Vihecles\Truck.cs" />
-    <Compile Include="VihecleEnergyType\VehicleBattery.cs" />
-    <Compile Include="VihecleEnergyType\VehicleFuelTank.cs" />
-    <Compile Include="Vihecles\Vehicle.cs" />
-    <Compile Include="Vihecles\Wheel.cs" />
+    <Compile Include="Vehicles\GarageVehicleRecord.cs" />
+    <Compile Include="Service\VehiclesCreator.cs" />
+    <Compile Include="Vehicles\ElectricMotorBike.cs" />
+    <Compile Include="Vehicles\ElectricPrivateCar.cs" />
+    <Compile Include="Vehicles\FuledMotorBike.CS" />
+    <Compile Include="Vehicles\FuledPrivateCar.cs" />
+    <Compile Include="Vehicles\MotorBike.cs" />
+    <Compile Include="Vehicles\PrivateCar.cs" />
+    <Compile Include="Vehicles\Truck.cs" />
+    <Compile Include="VehecleEnergyType\VehicleBattery.cs" />
+    <Compile Include="VehecleEnergyType\VehicleFuelTank.cs" />
+    <Compile Include="Vehicles\Vehicle.cs" />
+    <Compile Include="Vehicles\Wheel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TextFile1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

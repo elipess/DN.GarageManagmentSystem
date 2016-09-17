@@ -10,6 +10,10 @@ namespace Ex03.GarageLogic
         private const VehicleFuelTank.eFuelType k_FuelType = VehicleFuelTank.eFuelType.Octan95;
 
 
+        public FuledPrivateCar(string i_PlateNumber) : base(i_PlateNumber)
+        {
+        }
+
         public FuledPrivateCar(string i_Model, string i_PlateNumber, int i_EngineCapacity,
                                  string i_WheelManufacturer, float i_CurrentAirPressure, float i_MaxWheelAirPressureByManufacturer,
                                  eCarColor i_CarColor, ePrivateCarNumOfDoors i_PrivateCarNumOfDoors)

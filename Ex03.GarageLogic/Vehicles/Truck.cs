@@ -15,12 +15,14 @@ namespace Ex03.GarageLogic
         private const VehicleFuelTank.eFuelType k_FuelType = VehicleFuelTank.eFuelType.Soler;
         private VehicleFuelTank m_FuelTank = new VehicleFuelTank(k_FuelTankCapacity, k_FuelType, 0);
 
-        public Truck(string i_Model, string i_PlateNumber, 
-                     string i_WheelManufacturer, float i_CurrentAirPressure, float i_MaxWheelAirPressureByManufacturer,
-                     bool i_ContainsDangerousSubstance, float i_MaxAllowedCarryingWeight)     
-                     : base(i_Model, i_PlateNumber,
-                            i_WheelManufacturer, i_CurrentAirPressure, i_MaxWheelAirPressureByManufacturer)
-                                  
+        public Truck(string i_PlateNumber) : base(i_PlateNumber)
+        {
+        }
+        public Truck(string i_Model, string i_PlateNumber,
+                        string i_WheelManufacturer, float i_CurrentAirPressure, float i_MaxWheelAirPressureByManufacturer,
+                        bool i_ContainsDangerousSubstance, float i_MaxAllowedCarryingWeight)
+            : base(i_Model, i_PlateNumber,
+                   i_WheelManufacturer, i_CurrentAirPressure, i_MaxWheelAirPressureByManufacturer, k_TruckNumOfWheels)
         {
             m_ContainsDangerousSubstance = i_ContainsDangerousSubstance;
             m_MaxAllowedCarryingWeight = i_MaxAllowedCarryingWeight;

@@ -11,14 +11,15 @@ namespace Ex03.GarageLogic
         private VehicleFuelTank m_FuelTank = new VehicleFuelTank(k_FuelTankCapacity, k_FuelType, 0);
 
 
-
+       public FuledMotorBike(string i_PlateNumber) : base(i_PlateNumber)
+        {
+        }
         public FuledMotorBike(string i_Model, string i_PlateNumber, int i_EngineCapacity,
                                  string i_WheelManufacturer, float i_CurrentAirPressure, float i_MaxWheelAirPressureByManufacturer,
                                  eLicenseType i_LicenseType) 
                                  : base(i_Model, i_PlateNumber, i_EngineCapacity,
                                         i_WheelManufacturer, i_CurrentAirPressure, i_MaxWheelAirPressureByManufacturer,
                                         i_LicenseType)
-                               
         {
         }
 

@@ -8,6 +8,9 @@ namespace Ex03.ConsoleUI
 {
     class ConsoleUI
     {
+        private const string k_ExitSign = "q";
+
+
         internal enum eChoise
         {
             InsertCar = 1,
@@ -24,12 +27,12 @@ namespace Ex03.ConsoleUI
         {
             m_GarageMgr = i_GarageMgr;
         }
-
+       
         internal void MainMenu()
         {
             int choise;
             eChoise EChoise;
-            string[] actions = new string[]
+            string[] actions = new string[] //move to txt file
             {
                 "1. Insert a new car",
                 "2. Display the license numbers of the registered vehicles",
@@ -56,19 +59,30 @@ What Would you like to do?
             performAction(EChoise);
         }
 
-        private static int getChoise(int maxValue)
+        private static int getChoise(int i_MaxValue)
         {
-            int choise;
-            while (true)
+            int choise = 0;
+            do
             {
-                if (int.TryParse(Console.ReadLine(), out choise))
+                try
                 {
-                    if (choise > 1 && choise < maxValue)
+                    choise = Int32.Parse(Console.ReadLine());
+                    if (!(choise > 0 && choise < i_MaxValue))
+                    {
+                        Console.WriteLine("Choise is not Supported, Please try again: ");
+                        continue;
+                    }
+                    else
                     {
                         break;
                     }
                 }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
+            while (choise > 0 && choise < i_MaxValue);
 
             return choise;
         }
@@ -103,43 +117,284 @@ What Would you like to do?
             }
         }
 
-        private void insertNewCar()
+        private void changeVehicleStat()
         {
-            int i = 0;
-            List<Vehicle> vehicels = getAndPrintVehiclesList();
-            int choise = getChoise(vehicels.Count);
-            Vehicle vehicle = vehicels[choise];
-            MemberInfo[] membersInfo = vehicle.GetType().GetMembers();
-            string[] data = new string[membersInfo.Length];
-            foreach (MemberInfo member in membersInfo)
+            Console.WriteLine("Please enter plate number:");
+            string plate = Console.ReadLine();
+            if (!m_GarageMgr.CheckVehicleExistence(plate))
             {
-                if (member.GetType() == typeof(MandatoriesHolder<object>))
+                /// no such car
+                Console.WriteLine("No such car!");
+            }
+            else
+            {
+                Console.WriteLine("what is the new status?");
+                string[] availableStatuses = m_GarageMgr.GetAvailableStatuses();
+                printNumeredArray(availableStatuses);
+                string newStat = Console.ReadLine();
+                try
                 {
-                    Console.WriteLine("{0}: ", member.ToString());
-                    data[i++] = Console.ReadLine();//improve!
+                    m_GarageMgr.ChangeStat(plate, newStat);
+                }
+                catch (ValueOutOfRangeException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                } 
+            }
+        }
+
+        private void displayRegisteredLN()
+        {
+            string[] availableStatuses = m_GarageMgr.GetAvailableStatuses();
+            Console.WriteLine("Please enter the status number that you want to see: ");
+            printNumeredArray(availableStatuses);
+            string status = Console.ReadLine();
+
+            while (true)
+            {
+                try
+                {
+                    LinkedList<string> plates = m_GarageMgr.GetVehcilesPlatesByStat(availableStatuses[int.Parse(status)]);
+                    displayStrList(plates);
+                    break;
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    continue;
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("Please enter a valid number");
+                    continue;
                 }
             }
-
-            m_GarageMgr.AddNewVehicle(vehicle, data);
         }
 
-        private List<Vehicle> getAndPrintVehiclesList()
+        private void displayStrList(LinkedList<string> i_StrList)
         {
-            int i = 0;
-
-            Console.Clear();
-            Console.WriteLine(
-@"Hello, let's add a new car!
-
-Please Choose the vehicle type: 
-");
-            List<Vehicle> vehicels = m_GarageMgr.GetVehicleList();
-            foreach (Vehicle vehicle in vehicels)
+            foreach (string str in i_StrList)
             {
-                Console.WriteLine("{0}: {1}.", i++, vehicle.TypeName);
+                Console.WriteLine(str);
             }
-
-            return vehicels;
         }
+
+        private void displayStrArr(string[] status)
+        {
+            int i = 1;
+            foreach (string Plate in status)
+            {
+                Console.WriteLine("{0}: {1}.", i++, Plate);
+            }
+        }
+
+        private void displayCarDetailes()
+        {
+            Console.WriteLine("Please enter car plate: ");
+            string plate = Console.ReadLine(); //TODO validate input
+            GarageVehicleRecord record = m_GarageMgr.GetVehicleRecordByPlate(plate);
+            displayVehicleDetailes(record);
+        }
+
+        private void insertNewCar()
+        {
+            Console.Clear();
+            Console.WriteLine(@"Hello, let's add a new car!");
+            Console.WriteLine("Please insert your plate number: ");
+            string plate = Console.ReadLine();
+
+            if (m_GarageMgr.CheckVehicleExistence(plate))
+            {
+                Console.WriteLine("Your vehicle is already registered.");
+                m_GarageMgr.ChangeStat(plate, "Repairing"); 
+            }
+            else
+            {
+                Console.WriteLine("Please enter your name: ");
+                string vehicleOwnerName = Console.ReadLine();
+                Console.WriteLine("Please enter your phone number: ");
+                string OwnerPhoneNumber = Console.ReadLine();
+                string[] typesNames = m_GarageMgr.GetSupportedVehicleTypesNames();
+                printNumeredArray(typesNames); 
+                Console.WriteLine("Please Choose the vehicle type: ");
+                int choise = getChoise(typesNames.Length);
+                GarageVehicleRecord record = m_GarageMgr.addNewVehicleToGarage(vehicleOwnerName, OwnerPhoneNumber, plate, typesNames[choise - 1]);
+                /// new car
+                Dictionary<string, string> dic = getSpecificDemands(record.Vehicle);
+                m_GarageMgr.FillDetailes(plate, dic);
+            }
+        }
+
+        private Dictionary<string, string> getSpecificDemands(Vehicle i_Vehicle)
+        {
+            Dictionary<string, string> o_DemandsDic = i_Vehicle.CloneDemandsDic();
+            while (true)
+            {
+                foreach (var key in o_DemandsDic.Keys)
+                {
+                    Console.Write("{0}: ", key);
+                    o_DemandsDic[key] = Console.ReadLine();
+                    if (o_DemandsDic[key] == k_ExitSign)
+                    {
+                        throw new Exception("Exit");
+                    }
+                }
+
+                if (!m_GarageMgr.CheckDicValidation(i_Vehicle, o_DemandsDic))
+                {
+                    Console.WriteLine("It's appear that some of the detailes weren't good, please type again.");
+                    continue;
+                }
+                else
+                {
+                    return o_DemandsDic;
+                }
+            }
+        }
+
+        private void printNumeredArray(string[] i_TypesNames)
+        {
+            int i = 1;
+            foreach (string Type in i_TypesNames)
+             {
+                 Console.WriteLine("{0}: {1}.", i++, Type);
+             }
+        }
+
+        private void displayVehicleDetailes(GarageVehicleRecord i_Record)
+        {
+            foreach (var detailPair in i_Record.Vehicle.Details)
+            {
+                Console.WriteLine("{0}: {1}", detailPair.Key, detailPair.Value);
+            }
+        }
+  
+        private void FillAir()
+        {
+            Console.Clear();
+            Console.WriteLine("Please enter car plate: ");
+            string plate = Console.ReadLine();
+            if (!m_GarageMgr.CheckVehicleExistence(plate))
+            {
+                /// no such car
+                Console.WriteLine("No such car!");
+            }
+            else
+            {
+                bool isFillToMax = m_GarageMgr.FillInAirPresureToMax(plate);
+                if (isFillToMax == true)
+                {
+                    Console.WriteLine("Air Presure was filled to Max for car with plate number {0} .", plate);
+
+                }
+                else
+                {
+                    Console.WriteLine("Cant fill int to MAX .");
+                }
+            }
+        }
+        private void FuelTank()
+        {
+            Console.Clear();
+            Console.WriteLine("Please enter car plate: ");
+            string plate = Console.ReadLine(); //TODO validate input
+            if (!m_GarageMgr.CheckVehicleExistence(plate))
+            {
+                /// no such car
+                Console.WriteLine("No such car!");
+            }
+            else
+            {
+                string[] fuelTypes = m_GarageMgr.GetSupportedVehicleFuelTypes();
+                printNumeredArray(fuelTypes); 
+                Console.WriteLine("Choose Fuel you want to fiil in .");
+                string fuelType = Console.ReadLine();
+                Console.WriteLine("Please insert the amount of fuel to fill in .");
+                float amount;
+                while(true)
+                {
+                  try
+                  {
+                     amount = Single.Parse(Console.ReadLine());
+                  }
+                  catch (FormatException)
+                  {
+                     Console.WriteLine("Inserted value is not in a valid format.");
+                  }
+                }
+                bool isFilledToMax = m_GarageMgr.FillInFuel(plate, fuelType, amount);
+                if (isFilledToMax == true)
+                {
+                    Console.WriteLine("Vehicle with plate number {0} was enfuled with {1} liters of {2}.", plate, amount, fuelType);
+
+                }
+                else
+                {
+                    Console.WriteLine("Could not enduel the vehicle, please try different amount.");
+                }
+            }
+        }
+
+        private void charge()
+        {
+            {
+                Console.Clear();
+                Console.WriteLine("Please enter car plate: ");
+                string plate = Console.ReadLine(); //TODO validate input
+                if (!m_GarageMgr.CheckVehicleExistence(plate))
+                {
+                    /// no such car
+                    Console.WriteLine("No such car!");
+                }
+                else
+                {
+                    Console.WriteLine("Please insert number of minutes you want to add to vehicle battery .");
+                    float minutes;
+                    while (true)
+                    {
+                        try
+                        {
+                            minutes = Single.Parse(Console.ReadLine());
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("Inserted value is not in a valid format.");
+                        }
+                    }
+                    bool isCharged = m_GarageMgr.ChargeElectricVehicle(plate, minutes);
+                    if (isCharged == true)
+                    {
+                        Console.WriteLine("Vehicle with plate number {0} was charged with  {1} minutes", plate, minutes);
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Could not charge the vehicle, please try different value.");
+                    }
+                }
+            }
+        }
+
+    
+//        private List<Vehicle> getAndPrintVehiclesList()
+//        {
+//            int i = 1;
+
+//            Console.Clear();
+//            Console.WriteLine(
+//@"Hello, let's add a new car!
+//
+//Please Choose the vehicle type: 
+//");
+//            List<Vehicle> vehicels = m_GarageMgr.GetVehicleList();
+//            foreach (Vehicle vehicle in vehicels)
+//            {
+//                Console.WriteLine("{0}: {1}.", i++, vehicle.TypeName);
+//            }
+
+//            return vehicels;
+//        }
+
+///       public object VehicleOwnerName { get; set; }
     }
 }

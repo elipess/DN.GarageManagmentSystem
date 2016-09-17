@@ -7,9 +7,12 @@ namespace Ex03.GarageLogic
     public class ElectricMotorBike : MotorBike
     {
         private const float k_MaxBatteryWorkingTimeHours = 3.6f;
-
         private VehicleBattery m_Battery = new VehicleBattery(k_MaxBatteryWorkingTimeHours, 0);
 
+
+        public ElectricMotorBike(string i_PlateNumber) : base(i_PlateNumber)
+        {
+        }
         public ElectricMotorBike(string i_Model, string i_PlateNumber, int i_EngineCapacity,
                                  string i_WheelManufacturer, float i_CurrentAirPressure, float i_MaxWheelAirPressureByManufacturer,
                                  eLicenseType i_LicenseType) 
@@ -18,8 +21,14 @@ namespace Ex03.GarageLogic
                                         i_LicenseType)
                                
         {
+            defineDemands();
         }
-        
+
+        private void defineDemands()
+        {
+            Demands["Engine Capcity"] = ""; // EYLON
+        }
+
         public float MaxBatteryWorkingTime
         {
             get
